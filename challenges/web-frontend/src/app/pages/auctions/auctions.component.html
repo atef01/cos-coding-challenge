@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <app-page-title title="Auctions" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  
+
+  <div class="row">
+    <div class="col-md-6 col-xl-4" *ngFor="let auction of auctionsData">
+      <div class="card-box product-box p-1">
+
+        <div class="product-action">
+        
+        </div>
+
+        <div class="product-img-bg" *ngIf="auction?.associatedVehicle?.vehicleImages?.length != 0">
+          <img  [defaultImage]="defaultImage" [lazyLoad]="auction?.associatedVehicle?.vehicleImages[0].url"  class="img-fluid" />
+        </div>
+
+        <div class="product-info">
+          <div class="row align-items-center">
+            <div class="col">
+              <h5 class="font-16 mt-0 sp-line-1"><a routerLink="/ecommerce/product-detail"
+                  class="text-dark">{{ auction.label }}</a> </h5>
+              <p class="m-0"> 
+                <span class="text-muted"> <span class="mdi mdi-calendar-blank mr-1"></span>{{auction?.associatedVehicle?.ez}}</span> 
+              </p> 
+              <p class="m-0">   
+                <span class="text-muted"><span class="mdi mdi-speedometer mr-1"></span>{{auction?.associatedVehicle.mileageInKm | number}} Km</span>
+              </p>  
+              <p class="text-muted m-0">
+                <span class="text-muted">
+                  <span class="mdi mdi-steering mr-1"></span>
+                  <span *ngIf="auction?.associatedVehicle?.transmission == 1">Auto Transmission</span> 
+                  <span *ngIf="auction?.associatedVehicle?.transmission != 1">Manual Transmission</span>
+              </span>
+            </p>
+              <p class="text-muted m-0">
+                <span class="mdi mdi-gas-station mr-1"></span>
+                <span *ngIf="auction?.associatedVehicle?.fuelType== 0 || auction?.associatedVehicle?.fuelType== -1">Gasoline</span>
+                <span *ngIf="auction?.associatedVehicle?.fuelType== 1">Dissel</span>
+                <span *ngIf="auction?.associatedVehicle?.fuelType== 4">Gasoline</span>
+              </p>
+            </div>
+            <div class="col-auto">
+              <div class="product-price-tag font-15">
+                {{auction?.currentHighestBidValue}} €
+              </div>
+            </div>
+          </div> <!-- end row -->
+          <div class="row mt-1">
+           
+            <div class="col">
+              <p>{{ auction?.RemainingTimeInSecondsHMS}}</p>
+            </div>
+            <div class="col">
+              <button class="btn btn-icon btn-warning  btn-xs float-right" *ngIf="auction?.amIHighestBidder">
+                <i class="mdi mdi-flag"></i> Highest bidder</button>
+            </div>
+          </div>
+        </div> <!-- end product info-->
+      </div> <!-- end card-box-->
+    </div> <!-- end col-->
+    <div class=" col-12 text-center my-4 " *ngIf="haveMore">
+      <a href="javascript:void(0);" (click)="OnloadMore()" class="text-danger"><i *ngIf="Loadmore" class="mdi mdi-spin mdi-loading mr-1"></i> Load more </a>
+    </div>
+  </div>
+</div>
